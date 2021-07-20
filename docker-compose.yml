@@ -1,0 +1,27 @@
+version: '3'
+services:
+  yapi:
+    restart: unless-stopped
+    image: wanlinus/yapi:latest
+    # build: ./
+    ports:
+      - 3000:3000
+    volumes:
+      - ./config.json:/app/yapi/config.json
+      - ./data/yapi/initlock:/app/yapi/initlock
+    depends_on:
+      - mongo
+    entrypoint: "bash ./wait-for-it.sh mongo:27017 -- sh ./entrypoint.sh"
+    networks:
+      - yapi-net
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/mongodb:/data/db
+    networks:
+      - yapi-net
+networks:
+  yapi-net:
