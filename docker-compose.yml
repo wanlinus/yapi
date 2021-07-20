@@ -2,7 +2,7 @@ version: '3'
 services:
   yapi:
     restart: unless-stopped
-    image: wanlinus/yapi:latest
+    image: wanlinus/yapi:1.8.3
     # build: ./
     ports:
       - 3000:3000
